@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VisionTech Communication</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f5f7fa;
+      scroll-behavior: smooth;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    ul {
+      list-style: none;
+    }
+
+    /* Navbar */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #004080;
+      color: white;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      cursor: default;
+    }
+    nav ul {
+      display: flex;
+      gap: 1.8rem;
+    }
+    nav ul li {
+      font-weight: 600;
+    }
+    nav ul li a {
+      color: white;
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      color: #ffcc00;
+      border-bottom: 2px solid #ffcc00;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      padding: 0 1rem;
+      margin-top: 60px; /* header height */
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+    .hero p {
+      font-size: 1.3rem;
+      max-width: 700px;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+    }
+    .btn-primary {
+      background-color: #ffcc00;
+      color: #004080;
+      padding: 0.9rem 2.5rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255,204,0,0.5);
+      transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover {
+      background-color: #e6b800;
+    }
+
+    /* Sections */
+    section {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    h2.section-title {
+      font-size: 2.5rem;
+      color: #004080;
+      margin-bottom: 1.5rem;
+      border-bottom: 4px solid #ffcc00;
+      display: inline-block;
+      padding-bottom: 0.3rem;
+    }
+    p.section-description {
+      max-width: 800px;
+      color: #555;
+      font-size: 1.1rem;
+      margin-bottom: 3rem;
+    }
+
+    /* About */
+    #about p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* Services */
+    #services .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 2rem;
+    }
+    .service-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+      cursor: default;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    .service-icon {
+      font-size: 3rem;
+      color: #ffcc00;
+      margin-bottom: 1rem;
+    }
+    .service-card h3 {
+      color: #004080;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    .service-card p {
+      color: #555;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    /* Products */
+    #products .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 2rem;
+    }
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      cursor: default;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    .product-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .product-content {
+      padding: 1rem 1.5rem 2rem;
+    }
+    .product-content h4 {
+      color: #004080;
+      margin-bottom: 0.8rem;
+    }
+    .product-content p {
+      color: #555;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    /* Support */
+    #support p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin-bottom: 1rem;
+      color: #555;
+    }
+    #support a {
+      color: #004080;
+      font-weight: 600;
+    }
+
+    /* Contact */
+    #contact form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    #contact label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #004080;
+    }
+    #contact input, #contact textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+    #contact input:focus, #contact textarea:focus {
+      border-color: #ffcc00;
+      outline: none;
+    }
+    #contact button {
+      background-color: #004080;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-weight: 700;
+    }
+    #contact button:hover {
+      background-color: #003060;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #00264d;
+      color: #ccc;
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+    footer a {
+      color: #ffcc00;
+      margin: 0 0.5rem;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    footer a:hover {
+      color: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      nav ul {
+        gap: 1rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .container {
+        padding: 0 1rem;
+      }
+      section {
+        padding: 3rem 1rem;
+      }
+    }
+  </style>
+  <!-- Icons CDN (FontAwesome) -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="logo">VisionTech</div>
+      <nav>
+        <ul>
+          <li><a href="#about" class="nav-link active">About</a></li>
+          <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#products" class="nav-link">Products</a></li>
+          <li><a href="#support" class="nav-link">Support</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="home">
+    <h1>Connecting Your World with Technology</h1>
+    <p>Innovative communication solutions tailored for your business success.</p>
+    <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in Touch</button>
+  </section>
+
+  <section id="about">
+    <h2 class="section-title">About Us</h2>
+    <p>
+      VisionTech Communication is a leading provider of innovative communication solutions. We specialize in delivering cutting-edge technology services that connect businesses and individuals worldwide. Our mission is to empower our clients with reliable, efficient, and scalable communication tools.
+    </p>
+  </section>
+
+  <section id="services">
+    <h2 class="section-title">Our Services</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-phone-volume"></i></div>
+        <h3>Telecommunication Solutions</h3>
+        <p>Providing advanced telecommunication infrastructure and support for seamless connectivity.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-network-wired"></i></div>
+        <h3>Network Installation & Maintenance</h3>
+        <p>Expert network setup and ongoing maintenance to ensure optimal performance.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-cloud"></i></div>
+        <h3>Cloud Communication</h3>
+        <p>Cloud-based communication platforms to enhance collaboration and productivity.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-headset"></i></div>
+        <h3>Consulting & Support</h3>
+        <p>Professional consulting services to tailor communication strategies to your needs.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="products">
+    <h2 class="section-title">Our Products</h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80" alt="Product 1" class="product-image" />
+        <div class="product-content">
+          <h4>VisionTech Router X100</h4>
+          <p>High-speed router designed for enterprise-grade connectivity and security.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" alt="Product 2" class="product-image" />
+        <div class="product-content">
+          <h4>CloudComm Platform</h4>
+          <p>Scalable cloud communication platform for unified messaging and collaboration.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80" alt="Product 3" class="product-image" />
+        <div class="product-content">
+          <h4>SecureNet Firewall</h4>
+          <p>Advanced firewall solution to protect your network from cyber threats.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="support">
+    <h2 class="section-title">Support</h2>
+    <p>Need help? Our expert support team is here to assist you 24/7.</p>
+    <p>Email us at <a href="mailto:sales@visiontechcommunication.in">sales@visiontechcommunication.in</a></p>
+    <p>Call us at <a href="tel:+919818346141">9818346141</a> or <a href="tel:+919205864623">9205864623</a></p>
+  </section>
+
+  <section id="contact">
+    <h2 class="section-title">Contact Us</h2>
+    <form onsubmit="event.preventDefault(); alert('Thank you for contacting VisionTech Communication! We will get back to you soon.'); this.reset();">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required placeholder="Your full name" />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="Your email address" />
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" required placeholder="Write your message here..."></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 VisionTech Communication. All rights reserved.</p>
+    <p>
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </p>
+  </footer>
+
+  <script>
+    // Highlight active nav link on scroll
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('nav ul li a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 70;
+        if (pageYOffset >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+  <!-- FontAwesome Icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
